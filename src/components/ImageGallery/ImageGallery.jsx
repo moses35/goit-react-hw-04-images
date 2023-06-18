@@ -13,10 +13,10 @@ export const ImageGallery = ({ search }) => {
   const [hiddenLoadMore, setHiddenLoadMore] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [prevValue, setPrevValue] = useState('');
   const [hits, setHits] = useState(0);
 
   const valueRef = useRef(true);
+  const prevValue = useRef('');
 
   const loadMore = () => {
     setPage(prevPage => prevPage + 1);
@@ -34,7 +34,7 @@ export const ImageGallery = ({ search }) => {
 
   useEffect(() => {
     if (search) {
-      if (search !== prevValue) {
+      if (search !== prevValue.current) {
         reset();
         valueRef.current = true;
       }
@@ -61,7 +61,7 @@ export const ImageGallery = ({ search }) => {
           reset();
         })
         .finally(() => {
-          setPrevValue(search);
+          prevValue.current = search;
           setIsLoaded(false);
         });
     }
@@ -76,7 +76,7 @@ export const ImageGallery = ({ search }) => {
         toast.error(
           `We're sorry, but you've reached the end of search results.`
         );
-        setPrevValue('');
+        prevValue.current = '';
       }
     }
   }, [hits, totalCount]);
