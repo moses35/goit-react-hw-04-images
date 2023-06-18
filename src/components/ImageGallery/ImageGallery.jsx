@@ -30,6 +30,7 @@ export const ImageGallery = ({ search }) => {
     setHiddenLoadMore(false);
     setTotalCount(0);
     setIsLoaded(true);
+    setHits(0);
   };
 
   useEffect(() => {
